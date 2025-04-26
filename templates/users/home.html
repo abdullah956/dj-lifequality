@@ -36,7 +36,7 @@
                 <h6>Welcome to Life Quality</h6>
                 <h2>Discover a New Era of Wellness</h2>
                 <p>At Life Quality, we redefine wellness and beauty by combining nature’s purest ingredients with the latest in scientific innovation. Our carefully curated products are designed to nourish, rejuvenate, and empower you—delivering real results with every use.</p>
-                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                <a href="{% url 'products' %}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                 <div class="hero__social">
                   <a href="#"><i class="fa fa-facebook"></i></a>
                   <a href="#"><i class="fa fa-twitter"></i></a>
@@ -79,68 +79,23 @@
   </div>
 
   <!-- Banner Section Begin -->
+
   <section class="py-5">
     <div class="container">
       <div class="row g-4 justify-content-center">
         <!-- Card 1 -->
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card border-0 h-100 text-center">
-            <div class="card-img-top" style="height: 280px; overflow: hidden;">
-              <img src="{% static 'img/banner/banner-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Supplements" />
-            </div>
-            <div class="card-body">
-              <h2 class="card-title"><a href="#" class="text-decoration-none text-dark">Supplements</a></h2>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card border-0 h-100 text-center">
-            <div class="card-img-top" style="height: 280px; overflow: hidden;">
-              <img src="{% static 'img/banner/banner-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Body" />
-            </div>
-            <div class="card-body">
-              <h2 class="card-title"><a href="#" class="text-decoration-none text-dark">Body</a></h2>
+        {% for category in categories %}
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card border-0 h-100 text-center">
+              <div class="card-img-top" style="height: 280px; overflow: hidden;">
+                <img src="{{ category.image.url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ category.name }}" />
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"><a href="#" class="text-decoration-none text-dark">{{ category.name }}</a></h2>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card border-0 h-100 text-center">
-            <div class="card-img-top" style="height: 280px; overflow: hidden;">
-              <img src="{% static 'img/banner/banner-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Face" />
-            </div>
-            <div class="card-body">
-              <h2 class="card-title"><a href="#" class="text-decoration-none text-dark">Face</a></h2>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card border-0 h-100 text-center">
-            <div class="card-img-top" style="height: 280px; overflow: hidden;">
-              <img src="{% static 'img/banner/banner-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Hair" />
-            </div>
-            <div class="card-body">
-              <h2 class="card-title"><a href="#" class="text-decoration-none text-dark">Hair</a></h2>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card border-0 h-100 text-center">
-            <div class="card-img-top" style="height: 280px; overflow: hidden;">
-              <img src="{% static 'img/banner/banner-1.jpg' %}" class="w-100 h-100" style="object-fit: cover;" alt="Makeup" />
-            </div>
-            <div class="card-body">
-              <h2 class="card-title"><a href="#" class="text-decoration-none text-dark">Makeup</a></h2>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -164,11 +119,11 @@
           <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-1.jpg' %}">
               <span class="label">New</span>
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>Piqué Biker Jacket</h6>
@@ -187,11 +142,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
           <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-2.jpg' %}">
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>Piqué Biker Jacket</h6>
@@ -211,11 +166,6 @@
           <div class="product__item sale">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-3.jpg' %}">
               <span class="label">Sale</span>
-              <!--  <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
             </div>
             <div class="product__item__text">
               <h6>Multi-pocket Chest Bag</h6>
@@ -234,11 +184,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
           <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-4.jpg' %}">
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>Diagonal Textured Cap</h6>
@@ -257,11 +207,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
           <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-5.jpg' %}">
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>Lether Backpack</h6>
@@ -281,11 +231,11 @@
           <div class="product__item sale">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-6.jpg' %}">
               <span class="label">Sale</span>
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>Ankle Boots</h6>
@@ -304,11 +254,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
           <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-7.jpg' %}">
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>T-shirt Contrast Pocket</h6>
@@ -327,11 +277,11 @@
         <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
           <div class="product__item">
             <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/product-8.jpg' %}">
-              <!--  <ul class="product__hover">
+              <!--     <ul class="product__hover">
                                 <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                 <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                                 <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>  -->
+                            </ul>     -->
             </div>
             <div class="product__item__text">
               <h6>Basic Flowing Scarf</h6>
