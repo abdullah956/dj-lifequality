@@ -63,7 +63,7 @@
       <div class="offcanvas__nav__option">
         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="Search" /></a>
 
-        <a href="{% url 'cart'%}">
+        <a href="{% url 'cart' %}">
           <img src="{% static 'img/icon/cart.png' %}" alt="Cart" />
           <span>0</span>
         </a>
@@ -115,10 +115,10 @@
             <nav class="header__menu mobile-menu">
               <ul>
                 <li class="active">
-                  <a href="{% url 'home'%}">Home</a>
+                  <a href="{% url 'home' %}">Home</a>
                 </li>
                 <li>
-                  <a href="{% url 'products'%}">Shop</a>
+                  <a href="{% url 'products' %}">Shop</a>
                   <ul class="dropdown">
                     <li>
                       <a href="">All Products</a>
@@ -144,10 +144,10 @@
                   <a href="./shop.html">Story</a>
                 </li> {% endcomment %}
                 <li>
-                  <a href="{% url 'about'%}">About</a>
+                  <a href="{% url 'about' %}">About</a>
                 </li>
                 <li>
-                  <a href="{% url 'contact'%}">Contact</a>
+                  <a href="{% url 'contact' %}">Contact</a>
                 </li>
               </ul>
             </nav>
@@ -156,7 +156,7 @@
             <div class="header__nav__option">
               <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="Search" /></a>
 
-              <a href="{% url 'cart'%}">
+              <a href="{% url 'cart' %}">
                 <img src="{% static 'img/icon/cart.png' %}" alt="Cart" />
                 <span>0</span>
               </a>
@@ -233,8 +233,9 @@
               <h6>NewLetter</h6>
               <div class="footer__newslatter">
                 <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                <form action="#">
-                  <input type="text" placeholder="Your email" />
+                <form action="{% url 'subscribe_newsletter' %}" method="post">
+                  {% csrf_token %}
+                  {{ newsletter_form.email }}
                   <button type="submit"><span class="icon_mail_alt"></span></button>
                 </form>
               </div>
