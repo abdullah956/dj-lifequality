@@ -115,10 +115,10 @@
             <nav class="header__menu mobile-menu">
               <ul>
                 <li class="active">
-                  <a href="./index.html">Home</a>
+                  <a href="{% url 'home'%}">Home</a>
                 </li>
                 <li>
-                  <a href="#">Shop</a>
+                  <a href="{% url 'products'%}">Shop</a>
                   <ul class="dropdown">
                     <li>
                       <a href="">All Products</a>
@@ -140,14 +140,14 @@
                     </li>
                   </ul>
                 </li>
-                <li>
+                {% comment %} <li>
                   <a href="./shop.html">Story</a>
+                </li> {% endcomment %}
+                <li>
+                  <a href="{% url 'about'%}">About</a>
                 </li>
                 <li>
-                  <a href="./blog.html">About</a>
-                </li>
-                <li>
-                  <a href="./contact.html">Contact</a>
+                  <a href="{% url 'contact'%}">Contact</a>
                 </li>
               </ul>
             </nav>
