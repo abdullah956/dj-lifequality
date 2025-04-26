@@ -12,9 +12,10 @@ def products_view(request):
     categories = Category.objects.all()
     return render(request, 'products/products.html', {'products': products, 'categories': categories})
 
+def product_detail_view(request, id):
+    product = Product.objects.get(id=id)
+    return render(request, 'products/product_detail.html', {'product': product})
 
-def product_detail_view(request):
-    return render(request, 'products/product_detail.html')
 
 def category_products_view(request, category_id):
     category = get_object_or_404(Category, id=category_id)
