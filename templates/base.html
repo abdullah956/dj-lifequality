@@ -125,7 +125,7 @@
                     </li>
                     {% for category in categories %}
                       <li>
-                        <a href="#">{{ category.name }}</a>
+                        <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
                       </li>
                     {% endfor %}
                   </ul>

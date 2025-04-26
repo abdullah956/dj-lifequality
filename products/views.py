@@ -1,7 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Product, Category
+
 
 def products_view(request):
-    return render(request, 'products/products.html')
+    sort = request.GET.get('sort')
+    products = Product.objects.all()
+    if sort == 'low':
+        products = products.order_by('price')
+    elif sort == 'high':
+        products = products.order_by('-price')
+    categories = Category.objects.all()
+    return render(request, 'products/products.html', {'products': products, 'categories': categories})
+
 
 def product_detail_view(request):
-    return render(request, 'prodcuts/product_detail.html')
+    return render(request, 'products/product_detail.html')
+
+def category_products_view(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    categories = Category.objects.all()
+    return render(request, 'products/products.html', {'products': products, 'categories': categories, 'selected_category': category})
