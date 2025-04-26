@@ -63,7 +63,7 @@
       <div class="offcanvas__nav__option">
         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="Search" /></a>
 
-        <a href="#">
+        <a href="{% url 'cart'%}">
           <img src="{% static 'img/icon/cart.png' %}" alt="Cart" />
           <span>0</span>
         </a>
@@ -156,7 +156,7 @@
             <div class="header__nav__option">
               <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="Search" /></a>
 
-              <a href="#">
+              <a href="{% url 'cart'%}">
                 <img src="{% static 'img/icon/cart.png' %}" alt="Cart" />
                 <span>0</span>
               </a>
