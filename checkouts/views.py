@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def checkout_view(request):
+    return render(request, 'checkout.html')
+
+def thanks_view(request):
+    return render(request, 'thanks.html')
