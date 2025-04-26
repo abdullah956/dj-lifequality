@@ -1,10 +1,12 @@
 from django.shortcuts import render , redirect
 from .forms import NewsletterSubscriptionForm
-from products.models import Category
+from products.models import Category, Product
 
 def home_view(request):
     categories = Category.objects.all()
-    return render(request, 'users/home.html', {'categories': categories})
+    products = Product.objects.all()  
+    return render(request, 'users/home.html', {'categories': categories, 'products': products})
+
 
 def story_view(request):
     return render(request, 'users/story.html')
