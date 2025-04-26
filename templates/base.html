@@ -121,25 +121,16 @@
                   <a href="{% url 'products' %}">Shop</a>
                   <ul class="dropdown">
                     <li>
-                      <a href="">All Products</a>
+                      <a href="{% url 'products' %}">All Products</a>
                     </li>
-                    <li>
-                      <a href="">Supplements</a>
-                    </li>
-                    <li>
-                      <a href="">Body</a>
-                    </li>
-                    <li>
-                      <a href="">Face</a>
-                    </li>
-                    <li>
-                      <a href="">Hair</a>
-                    </li>
-                    <li>
-                      <a href="">Makeup</a>
-                    </li>
+                    {% for category in categories %}
+                      <li>
+                        <a href="#">{{ category.name }}</a>
+                      </li>
+                    {% endfor %}
                   </ul>
                 </li>
+
                 {% comment %} <li>
                   <a href="./shop.html">Story</a>
                 </li> {% endcomment %}
