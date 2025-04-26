@@ -3,7 +3,6 @@ from django.shortcuts import render
 def home_view(request):
     return render(request, 'index.html')
 
-
 def shop_view(request):
     return render(request, 'shop.html')
 
