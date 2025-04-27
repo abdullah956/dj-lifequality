@@ -1,6 +1,7 @@
 from django.shortcuts import render , redirect
 from .forms import NewsletterSubscriptionForm
 from products.models import Category, Product
+from .models import ContactMessage
 
 def home_view(request):
     categories = Category.objects.all()
@@ -23,3 +24,12 @@ def subscribe_newsletter(request):
         if form.is_valid():
             form.save()
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+def contact_view(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        ContactMessage.objects.create(name=name, email=email, message=message)
+        return redirect('home')
+    return render(request, 'users/contact.html')
