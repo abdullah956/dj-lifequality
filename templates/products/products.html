@@ -46,8 +46,13 @@
                 <div class="shop__product__option__right">
                   <p>Sort by Price:</p>
                   <select onchange="location = this.value;">
-                    <option value="{% url 'products' %}?sort=low">Low To High</option>
-                    <option value="{% url 'products' %}?sort=high">High To Low</option>
+                    {% if category %}
+                      <option value="{% url 'products_by_category' category.id %}?sort=low">Low To High</option>
+                      <option value="{% url 'products_by_category' category.id %}?sort=high">High To Low</option>
+                    {% else %}
+                      <option value="{% url 'products' %}?sort=low">Low To High</option>
+                      <option value="{% url 'products' %}?sort=high">High To Low</option>
+                    {% endif %}
                   </select>
                 </div>
               </div>
