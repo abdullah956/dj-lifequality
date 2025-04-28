@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
-
   <!-- Hero Section Begin -->
   <section class="hero">
     <div class="hero__slider owl-carousel">
@@ -107,153 +105,140 @@
     </div>
   </section>
 
-  <!-- Banner Section End -->
-
-
-  <section class="product spad">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <ul class="filter__controls">
-            <li class="active" data-filter="*">Best Sellers</li>
-          </ul>
+  {% if best_sellers %}
+    <section class="product spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="filter__controls">
+              <li class="active" data-filter="*">Best Sellers</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="swiper new-arrivals-slider">
-            <div class="swiper-wrapper">
-              {% for product in products %}
-                <div class="swiper-slide">
-                  <div class="product__item">
-                    <div class="product__item__pic">
-                      <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 280px; width: 100%; object-fit: cover;" class="img-fluid" />
-                    </div>
-                    <div class="product__item__text">
-                      <h6>{{ product.name }}</h6>
-                      <a href="{% url 'cart' %}" class="add-cart">+ Add To Cart</a>
-                      <div class="rating">
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="swiper new-arrivals-slider">
+              <div class="swiper-wrapper">
+                {% for product in best_sellers %}
+                  <div class="swiper-slide">
+                    <div class="product__item">
+                      <div class="product__item__pic">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 280px; width: 100%; object-fit: cover;" class="img-fluid" />
                       </div>
-                      <h5>${{ product.price }}</h5>
+                      <div class="product__item__text">
+                        <h6>{{ product.name }}</h6>
+                        <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>${{ product.price }}</h5>
+                      </div>
                     </div>
                   </div>
-                </div>
-              {% endfor %}
+                {% endfor %}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
-  
-            <!-- Add Navigation buttons -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
- 
- 
-  
-  
-  <!-- Product Section End -->
+    </section>
+  {% endif %}
 
-
-  <section class="product spad">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <ul class="filter__controls">
-            <li class="active" data-filter="*">New Arrivals</li>
-          </ul>
+  {% if new_arrivals %}
+    <section class="product spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="filter__controls">
+              <li class="active" data-filter="*">New Arrivals</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="swiper new-arrivals-slider">
-            <div class="swiper-wrapper">
-              {% for product in products %}
-                <div class="swiper-slide">
-                  <div class="product__item">
-                    <div class="product__item__pic">
-                      <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 280px; width: 100%; object-fit: cover;" class="img-fluid" />
-                    </div>
-                    <div class="product__item__text">
-                      <h6>{{ product.name }}</h6>
-                      <a href="{% url 'cart' %}" class="add-cart">+ Add To Cart</a>
-                      <div class="rating">
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="swiper new-arrivals-slider">
+              <div class="swiper-wrapper">
+                {% for product in new_arrivals %}
+                  <div class="swiper-slide">
+                    <div class="product__item">
+                      <div class="product__item__pic">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 280px; width: 100%; object-fit: cover;" class="img-fluid" />
                       </div>
-                      <h5>${{ product.price }}</h5>
+                      <div class="product__item__text">
+                        <h6>{{ product.name }}</h6>
+                        <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>${{ product.price }}</h5>
+                      </div>
                     </div>
                   </div>
-                </div>
-              {% endfor %}
+                {% endfor %}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
-  
-            <!-- Add Navigation buttons -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  {% endif %}
 
-
-
-  
-  <section class="product spad">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <ul class="filter__controls">
-            <li class="active" data-filter="*">Hot Sales</li>
-          </ul>
+  {% if hot_sales %}
+    <section class="product spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="filter__controls">
+              <li class="active" data-filter="*">Hot Sales</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="swiper new-arrivals-slider">
-            <div class="swiper-wrapper">
-              {% for product in products %}
-                <div class="swiper-slide">
-                  <div class="product__item">
-                    <div class="product__item__pic">
-                      <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 280px; width: 100%; object-fit: cover;" class="img-fluid" />
-                    </div>
-                    <div class="product__item__text">
-                      <h6>{{ product.name }}</h6>
-                      <a href="{% url 'cart' %}" class="add-cart">+ Add To Cart</a>
-                      <div class="rating">
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
-                        <i class="fa fa-star-o"></i>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="swiper new-arrivals-slider">
+              <div class="swiper-wrapper">
+                {% for product in hot_sales %}
+                  <div class="swiper-slide">
+                    <div class="product__item">
+                      <div class="product__item__pic">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 280px; width: 100%; object-fit: cover;" class="img-fluid" />
                       </div>
-                      <h5>${{ product.price }}</h5>
+                      <div class="product__item__text">
+                        <h6>{{ product.name }}</h6>
+                        <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
+                        <div class="rating">
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                          <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>${{ product.price }}</h5>
+                      </div>
                     </div>
                   </div>
-                </div>
-              {% endfor %}
+                {% endfor %}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
-  
-            <!-- Add Navigation buttons -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  
+    </section>
+  {% endif %}
 
   <!-- Categories Section Begin -->
   <section class="categories spad">
@@ -415,11 +400,4 @@
       <div class="swiper-button-prev"></div>
     </div>
   </div>
-
-
-
-  
-
-  
-  
 {% endblock %}

@@ -3,10 +3,18 @@ from .forms import NewsletterSubscriptionForm
 from products.models import Category, Product
 from .models import ContactMessage
 
+
 def home_view(request):
     categories = Category.objects.all()
-    products = Product.objects.all()  
-    return render(request, 'users/home.html', {'categories': categories, 'products': products})
+    best_sellers = Product.objects.filter(best_sellers=True)
+    new_arrivals = Product.objects.filter(new_arrivals=True)
+    hot_sales = Product.objects.filter(hot_sales=True)
+    return render(request, 'users/home.html', {
+        'categories': categories,
+        'best_sellers': best_sellers,
+        'new_arrivals': new_arrivals,
+        'hot_sales': hot_sales,
+    })
 
 
 def story_view(request):

@@ -60,7 +60,7 @@
                   <a href="{% url 'product_detail' product.id %}"><div class="product__item__pic set-bg" data-setbg="{{ product.image.url }}"></div></a>
                   <div class="product__item__text">
                     <h6>{{ product.name }}</h6>
-                    <a href="#" class="add-cart">+ Add To Cart</a>
+                    <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
                     <div class="rating">
                       <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                     </div>
