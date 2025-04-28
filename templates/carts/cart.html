@@ -36,7 +36,7 @@
                   <th>Product</th>
                   <th>Quantity</th>
                   <th>Total</th>
-                  <th></th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -44,7 +44,7 @@
                   <tr data-product-id="{{ item.product.id }}">
                     <td class="product__cart__item">
                       <div class="product__cart__item__pic">
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width:40px;" />
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width:80px;height: 80px; object-fit: cover;" />
                       </div>
                       <div class="product__cart__item__text">
                         <h6>{{ item.product.name }}</h6>
@@ -54,12 +54,23 @@
                     <td class="quantity__item">
                       <form method="POST" class="update-quantity-form">
                         {% csrf_token %}
-                        <input type="number" value="{{ item.quantity }}" class="update-cart-qty" data-product-id="{{ item.product.id }}" min="1" />
+                        <div class="input-group">
+                          <input 
+                            type="number" 
+                            value="{{ item.quantity }}" 
+                            name="quantity"
+                            class="form-control update-cart-qty" 
+                            data-product-id="{{ item.product.id }}" 
+                            min="1" 
+                            style="max-width: 85px;"
+                          />
+                        </div>
+                      
                       </form>
                     </td>
                     <td class="cart__price">${{ item.total_price }}</td>
                     <td class="cart__close">
-                      <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm text-light" style="background-color: #8c0c0c;"><i class="fa fa-close"></i></a>
+                      <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm text-light" style="background-color: #8c0c0c00;"><i class="fa fa-close"></i></a>
                     </td>
                   </tr>
                 {% endfor %}
