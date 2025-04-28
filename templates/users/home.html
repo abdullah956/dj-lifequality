@@ -128,13 +128,17 @@
                       <div class="product__item__text">
                         <h6>{{ product.name }}</h6>
                         <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                        </div>
+                        {% comment %} <div class="mb-3">
+                          {% for _ in product.filled_stars %}
+                            <span class="text-warning fs-5">&#9733;</span> <!-- Filled star -->
+                          {% endfor %}
+                          {% for _ in product.unfilled_stars %}
+                            <span class="text-secondary fs-5">&#9734;</span> <!-- Unfilled star -->
+                          {% endfor %}
+
+                          <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
+                        </div> {% endcomment %}
+
                         <h5>${{ product.price }}</h5>
                       </div>
                     </div>
@@ -173,13 +177,16 @@
                       <div class="product__item__text">
                         <h6>{{ product.name }}</h6>
                         <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                        </div>
+                        {% comment %} <div class="mb-3">
+                          {% for _ in product.filled_stars %}
+                            <span class="text-warning fs-5">&#9733;</span> <!-- Filled star -->
+                          {% endfor %}
+                          {% for _ in product.unfilled_stars %}
+                            <span class="text-secondary fs-5">&#9734;</span> <!-- Unfilled star -->
+                          {% endfor %}
+                          <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
+                        </div> {% endcomment %}
+
                         <h5>${{ product.price }}</h5>
                       </div>
                     </div>
@@ -218,13 +225,16 @@
                       <div class="product__item__text">
                         <h6>{{ product.name }}</h6>
                         <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                          <i class="fa fa-star-o"></i>
-                        </div>
+                        {% comment %} <div class="mb-3">
+                          {% for _ in product.filled_stars %}
+                            <span class="text-warning fs-5">&#9733;</span> <!-- Filled star -->
+                          {% endfor %}
+                          {% for _ in product.unfilled_stars %}
+                            <span class="text-secondary fs-5">&#9734;</span> <!-- Unfilled star -->
+                          {% endfor %}
+                          <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
+                        </div> {% endcomment %}
+
                         <h5>${{ product.price }}</h5>
                       </div>
                     </div>
@@ -329,63 +339,23 @@
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         <!-- Review 1 -->
-        <div class="swiper-slide text-center p-4">
-          <div class="mb-3">
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
+        {% for review in top_reviews %}
+          <div class="swiper-slide text-center p-4">
+            <div class="mb-3">
+              {% for _ in review.filled_stars %}
+                <span class="text-warning fs-5">&#9733;</span> <!-- Filled star -->
+              {% endfor %}
+              {% for _ in review.unfilled_stars %}
+                <span class="text-secondary fs-5">&#9734;</span> <!-- Unfilled star -->
+              {% endfor %}
+            </div>
+            <h5 class="fw-bold">{{ review.product.name }}</h5>
+            <p class="small">{{ review.review }}</p> <!-- Review text -->
+            <h6 class="fw-semibold mt-4">{{ review.name }}</h6> <!-- Reviewer's name -->
+            <!-- Display the actual product image -->
+            <img src="{{ review.product.image.url }}" alt="{{ review.product.name }}" class="img-fluid mt-2" style="max-height:60px;" />
           </div>
-          <h5 class="fw-bold">BEST HAIR SPRAY</h5>
-          <p class="small">I’ve been using the MANA Rosemary Hair Growth Spray for a year now and I can honestly say this product is so good, so nice, and so reliable that I...</p>
-          <h6 class="fw-semibold mt-4">HINA JAMIL</h6>
-          <img src="{% static 'img/product/product-4.jpg' %}" alt="product" class="img-fluid mt-2" style="max-height:60px;" />
-        </div>
-
-        <!-- Review 2 -->
-        <div class="swiper-slide text-center p-4">
-          <div class="mb-3">
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-          </div>
-          <h5 class="fw-bold">MAGIC FOR MY HAIR ❤️</h5>
-          <p class="small">Ok so I bought it without recommendation of any blogger... and I would say it's the best spray…</p>
-          <h6 class="fw-semibold mt-4">AISHA HASHMI</h6>
-          <img src="{% static 'img/product/product-3.jpg' %}" alt="product" class="img-fluid mt-2" style="max-height:60px;" />
-        </div>
-
-        <!-- Review 3 -->
-        <div class="swiper-slide text-center p-4">
-          <div class="mb-3">
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-          </div>
-          <h5 class="fw-bold">AWESOME CUSTOMER SERVICE & BEST PRODUCT</h5>
-          <p class="small">Genuine review after using their products frequently. I must say this spray is go-to...</p>
-          <h6 class="fw-semibold mt-4">AFFAN</h6>
-          <img src="{% static 'img/product/product-13.jpg' %}" alt="product" class="img-fluid mt-2" style="max-height:60px;" />
-        </div>
-
-        <div class="swiper-slide text-center p-4">
-          <div class="mb-3">
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-          </div>
-          <h5 class="fw-bold">AWESOME CUSTOMER SERVICE & BEST PRODUCT</h5>
-          <p class="small">Genuine review after using their products frequently. I must say this spray is go-to...</p>
-          <h6 class="fw-semibold mt-4">AFFAN</h6>
-          <img src="{% static 'img/product/product-4.jpg' %}" alt="product" class="img-fluid mt-2" style="max-height:60px;" />
-        </div>
+        {% endfor %}
       </div>
 
       <style>

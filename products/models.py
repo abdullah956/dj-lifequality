@@ -25,3 +25,14 @@ class Product(BasedModel):
 
     def __str__(self):
         return self.name
+
+
+class Review(BasedModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    rating = models.PositiveIntegerField()
+    review = models.TextField()
+
+    def __str__(self):
+        return f"{self.name} - {self.product.name}"

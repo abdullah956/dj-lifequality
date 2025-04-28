@@ -1,249 +1,192 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block title %} Product {%endblock %} 
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Product
+{% endblock %}
 {% block content %}
-<!-- Shop Details Section Begin -->
-<section class="shop-details">
-  <div class="product__details__pic">
+  <!-- Shop Details Section Begin -->
+  <section class="shop-details">
+    <div class="product__details__pic">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product__details__breadcrumb">
+              <a href="./index.html">Home</a>
+              <a href="./shop.html">Shop</a>
+              <span>Product Details</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-9 d-flex justify-content-center align-items-center">
+            <div class="product__details__pic__item text-center">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 380px; width: 300px; object-fit: cover" class="img-fluid" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="product__details__content" style="margin-top: -100px">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8">
+            <div class="product__details__text">
+              <h4>{{ product.name }}</h4>
+              <div class="rating">
+                {% for _ in product.filled_stars %}
+                  <i class="fa fa-star text-warning"></i>
+                {% endfor %}
+                {% for _ in product.unfilled_stars %}
+                  <i class="fa fa-star-o text-secondary"></i>
+                {% endfor %}
+                <span>{{ product.reviews.count }} Reviews</span>
+                <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
+              </div>
+
+              <h3>${{ product.price }} <span>${{ product.old_price }}</span></h3>
+
+              <!-- Description Section -->
+              <div class="product__details__description">
+                <h4>Description</h4>
+                <p>{{ product.description }}</p>
+              </div>
+
+              <!-- Ingredients Section (If applicable) -->
+              <div class="product__details__ingredients">
+                <h4>Ingredients</h4>
+                <p>{{ product.ingredients }}</p>
+              </div>
+
+              <!-- How to Use Section -->
+              <div class="product__details__how-to-use">
+                <h4>How to Use</h4>
+                <p>{{ product.how_to_use }}</p>
+              </div>
+
+              <!-- Note Section -->
+              <div class="product__details__note">
+                <h4>Note</h4>
+                <p>{{ product.note }}</p>
+              </div>
+
+              <!-- Add to Cart Button -->
+              <div class="product__details__cart__option">
+                <a href="{% url 'add_to_cart' product.id %}" class="primary-btn">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product__details__tab">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item active">
+                  <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Leave a Review</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Shop Details Section End -->
+
+  <style>
+    .ratings {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: left;
+      margin-bottom: 50px;
+    }
+    
+    .ratings > input {
+      display: none;
+    }
+    
+    .ratings > label {
+      position: relative;
+      width: 2em;
+      font-size: 2rem;
+      color: #ddd;
+      cursor: pointer;
+    }
+    
+    .ratings > label::before {
+      content: '★';
+      position: absolute;
+    }
+    
+    .ratings > input:checked ~ label,
+    .ratings > label:hover,
+    .ratings > label:hover ~ label {
+      color: rgb(244, 216, 7);
+    }
+  </style>
+  <form class="review-form p-4" action="{% url 'submit_review' product.id %}" method="POST" style="width: 70%;">
+    {% csrf_token %}
+    <h3 class="mb-4">Write a Review</h3>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Enter your name" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Your Email</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter your email" required />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label d-block">Your Rating</label>
+      <div class="ratings">
+        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"></label>
+        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"></label>
+        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"></label>
+        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"></label>
+        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Your Review</label>
+      <textarea class="form-control" name="review" rows="5" placeholder="Write your review here..." required></textarea>
+    </div>
+    <button type="submit" class="primary-btn">Submit Review</button>
+  </form>
+
+  <!-- Related Section Begin -->
+  <section class="related spad">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="product__details__breadcrumb">
-            <a href="./index.html">Home</a>
-            <a href="./shop.html">Shop</a>
-            <span>Product Details</span>
-          </div>
+          <h3 class="related-title">Related Product</h3>
         </div>
       </div>
       <div class="row">
-        <div
-          class="col-lg-12 col-md-9 d-flex justify-content-center align-items-center"
-        >
-          <div class="product__details__pic__item text-center">
-            <img
-              src="{{ product.image.url }}"
-              alt="{{ product.name }}"
-              style="height: 380px; width: 300px; object-fit: cover"
-              class="img-fluid"
-            />
+        {% for related_product in related_products %}
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="product__item">
+              <div class="product__item__pic set-bg" data-setbg="{{ related_product.image.url }}">
+                <span class="label">{{ related_product.category.name }}</span>
+              </div>
+              <div class="product__item__text">
+                <h6>{{ related_product.name }}</h6>
+                <a href="{% url 'product_detail' related_product.id %}" class="add-cart">+ Add To Cart</a>
+                <div class="rating">
+                  {% for _ in related_product.filled_stars %}
+                    <i class="fa fa-star"></i>
+                  {% endfor %}
+                  {% for _ in related_product.unfilled_stars %}
+                    <i class="fa fa-star-o"></i>
+                  {% endfor %}
+                </div>
+                <h5>${{ related_product.price }}</h5>
+              </div>
+            </div>
           </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
-  </div>
-  <div class="product__details__content" style="margin-top: -100px">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-lg-8">
-          <div class="product__details__text">
-            <h4>{{ product.name }}</h4>
-            <div class="rating">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o"></i>
-              <span>{{ product.reviews.count }} Reviews</span>
-            </div>
-            <h3>${{ product.price }} <span>${{ product.old_price }}</span></h3>
+  </section>
 
-            <!-- Description Section -->
-            <div class="product__details__description">
-              <h4>Description</h4>
-              <p>{{ product.description }}</p>
-            </div>
-
-            <!-- Ingredients Section (If applicable) -->
-            <div class="product__details__ingredients">
-              <h4>Ingredients</h4>
-              <p>{{ product.ingredients }}</p>
-            </div>
-
-            <!-- How to Use Section -->
-            <div class="product__details__how-to-use">
-              <h4>How to Use</h4>
-              <p>{{ product.how_to_use }}</p>
-            </div>
-
-            <!-- Note Section -->
-            <div class="product__details__note">
-              <h4>Note</h4>
-              <p>{{ product.note }}</p>
-            </div>
-
-            <!-- Add to Cart Button -->
-            <div class="product__details__cart__option">
-              <a href="{% url 'add_to_cart' product.id %}" class="primary-btn"
-                >Add to Cart</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="product__details__tab">
-            <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item active">
-                <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab"
-                  >Leave a Review</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Shop Details Section End -->
-
-<style>
-  .ratings {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: left;
-    margin-bottom: 50px;
-  }
-
-  .ratings > input {
-    display: none;
-  }
-
-  .ratings > label {
-    position: relative;
-    width: 2em;
-    font-size: 2rem;
-    color: #ddd;
-    cursor: pointer;
-  }
-
-  .ratings > label::before {
-    content: "★";
-    position: absolute;
-  }
-
-  .ratings > input:checked ~ label,
-  .ratings > label:hover,
-  .ratings > label:hover ~ label {
-    color: rgb(244, 216, 7);
-  }
-</style>
-
-<form class="review-form p-4" action="" method="POST" style="width: 70%;">
-  {% csrf_token %}
-
-  <h3 class="mb-4">Write a Review</h3>
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label class="form-label">Your Name</label>
-      <input type="text" class="form-control" name="name" placeholder="Enter your name" required />
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Your Email</label>
-      <input type="email" class="form-control" name="email" placeholder="Enter your email" required />
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label d-block">Your Rating</label>
-    <div class="ratings">
-      <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"></label>
-      <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"></label>
-      <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"></label>
-      <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"></label>
-      <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Your Review</label>
-    <textarea class="form-control" name="review" rows="5" placeholder="Write your review here..." required></textarea>
-  </div>
-
-  <button type="submit" class="primary-btn">Submit Review</button>
-</form>
-
-
-<!-- Related Section Begin -->
-<section class="related spad">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <h3 class="related-title">Related Product</h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-        <div class="product__item">
-          <div
-            class="product__item__pic set-bg"
-            data-setbg="{% static 'img/product/product-1.jpg' %}"
-          >
-            <span class="label">New</span>
-          </div>
-          <div class="product__item__text">
-            <h6>Piqué Biker Jacket</h6>
-            <a href="#" class="add-cart">+ Add To Cart</a>
-            <div class="rating">
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-            </div>
-            <h5>$67.24</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-        <div class="product__item">
-          <div
-            class="product__item__pic set-bg"
-            data-setbg="{% static 'img/product/product-1.jpg' %}"
-          >
-            <span class="label">New</span>
-          </div>
-          <div class="product__item__text">
-            <h6>Piqué Biker Jacket</h6>
-            <a href="#" class="add-cart">+ Add To Cart</a>
-            <div class="rating">
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-            </div>
-            <h5>$67.24</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-        <div class="product__item">
-          <div
-            class="product__item__pic set-bg"
-            data-setbg="{% static 'img/product/product-1.jpg' %}"
-          >
-            <span class="label">Sale</span>
-          </div>
-          <div class="product__item__text">
-            <h6>Piqué Biker Jacket</h6>
-            <a href="#" class="add-cart">+ Add To Cart</a>
-            <div class="rating">
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-              <i class="fa fa-star-o"></i>
-            </div>
-            <h5>$67.24</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Related Section End -->
+  <!-- Related Section End -->
 {% endblock %}

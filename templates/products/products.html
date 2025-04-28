@@ -66,9 +66,17 @@
                   <div class="product__item__text">
                     <h6>{{ product.name }}</h6>
                     <a href="{% url 'add_to_cart' product.id %}" class="add-cart">+ Add To Cart</a>
-                    <div class="rating">
-                      <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+
+                    <div class="mb-3">
+                      {% for _ in product.filled_stars %}
+                        <span class="text-warning fs-5">&#9733;</span>
+                      {% endfor %}
+                      {% for _ in product.unfilled_stars %}
+                        <span class="text-secondary fs-5">&#9734;</span>
+                      {% endfor %}
+                      <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
                     </div>
+
                     <h5>${{ product.price }}</h5>
                   </div>
                 </div>
