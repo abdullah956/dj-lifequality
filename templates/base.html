@@ -7,65 +7,156 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-      {% block title %}
-        My Site
-      {% endblock %}
-    </title>
+    <title>{% block title %} My Site {% endblock %}</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/bootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/font-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/elegant-icons.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/magnific-popup.css' %}"
+      type="text/css"
+    />
+    <!-- <link
+      rel="stylesheet"
+      href="{% static 'css/nice-select.css' %}"
+      type="text/css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/owl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/slicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/style.css' %}"
+      type="text/css"
+    />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+
+    <!-- Custom CSS to Hide Google Translate Toolbar -->
+    <!-- <style>
+      body > .skiptranslate {
+        display: none !important;
+      }
+    </style> -->
+    <style>
+      body > .skiptranslate {
+        display: none !important;
+      }
+    
+      body {
+        top: 0px !important;
+        position: static !important;
+        transform: none !important;
+      }
+    
+      html {
+        margin-top: 0px !important;
+      }
+    </style>
+    
   </head>
 
-  <body style="scroll-behavior: smooth;">
+  <body style="scroll-behavior: smooth">
     <!-- Page Preloder -->
     <div id="preloder">
       <div class="loader"></div>
     </div>
 
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    {% if messages %} {% for message in messages %}
+    <div
+      class="modal fade"
+      id="messageModal{{ forloop.counter }}"
+      tabindex="-1"
+      aria-labelledby="messageModalLabel{{ forloop.counter }}"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-white text-dark">
+          <div class="modal-header">
+            <h5 class="modal-title" id="messageModalLabel{{ forloop.counter }}">
+              Notification
+            </h5>
+          </div>
+          <div class="modal-body">{{ message }}</div>
         </div>
-      {% endfor %}
-    {% endif %}
+      </div>
+    </div>
+    {% endfor %} {% endif %}
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
       <div class="offcanvas__option">
-        {% comment %} <div class="offcanvas__links">
+        {% comment %}
+        <div class="offcanvas__links">
           <a href="#">Sign in</a>
           <a href="#">FAQs</a>
-        </div> {% endcomment %}
-        <div class="offcanvas__top__hover">
-          <span>Language <i class="arrow_carrot-down"></i></span>
-          <ul>
-            <li>English</li>
-            <li>Arabic</li>
+        </div>
+        {% endcomment %}
+        <div class="">
+          <ul style="list-style-type: none;">
+            <style>
+              #language_selector {
+                width: 200px;
+                border: none;
+                outline: none;
+                background-color: rgb(0, 0, 0);
+                color: white;
+              }
+              #language_selector option {
+                background-color: #fefefe;
+              }
+            </style>
+            <li>
+              <select
+                id="language_selector"
+                onchange="changeLanguageByButtonClick(this);"
+              >
+                <option value="en">English</option>
+                <option value="ar">Arabic</option>
+              </select>
+            </li>
           </ul>
         </div>
       </div>
       <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="Search" /></a>
+        <a href="#" class="search-switch"
+          ><img src="{% static 'img/icon/search.png' %}" alt="Search"
+        /></a>
 
         <a href="{% url 'cart' %}">
           <img src="{% static 'img/icon/cart.png' %}" alt="Cart" />
-          <span class="cart-count">({{ request.session.cart|length }})</span>
+          <span class="cart-count">{{ request.session.cart|length }}</span>
         </a>
         <!-- <div class="price">$0.00</div> -->
       </div>
@@ -88,22 +179,74 @@
             </div>
             <div class="col-lg-6 col-md-5">
               <div class="header__top__right">
-                {% comment %} <div class="header__top__links">
+                {% comment %}
+                <div class="header__top__links">
                   <a href="#">Sign in</a>
                   <a href="#">FAQs</a>
-                </div> {% endcomment %}
-                <div class="header__top__hover">
-                  <span>Language <i class="arrow_carrot-down"></i></span>
-                  <ul>
-                    <li>English</li>
-                    <li>Arabic</li>
-                  </ul>
                 </div>
+                {% endcomment %}
+                
+                  <ul>
+                    <style>
+                      #language_selector {
+                        width: 80px;
+                        border: none;
+                        outline: none;
+                        background-color: rgb(0, 0, 0);
+                        color: white;
+                      }
+                      #language_selector option {
+                        background-color: #ffffff;
+                        color: rgb(0, 0, 0);
+                      }
+                    </style>
+                    <li>
+                      <select
+                        id="language_selector"
+                        onchange="changeLanguageByButtonClick(this);"
+                      >
+                        <option value="en">English</option>
+                        <option value="ar">Arabic</option>
+                      </select>
+                    </li>
+                  </ul>
+                
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div id="google_translate_element" style="display: none"></div>
+
+      <!-- Google Translate Script -->
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement(
+            { pageLanguage: "en" },
+            "google_translate_element"
+          );
+        }
+      </script>
+      <script
+        type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+      ></script>
+
+      <!-- Script to Change Language -->
+      <script>
+        function changeLanguageByButtonClick(selectElement) {
+          var language = selectElement.value;
+          if (language) {
+            var selectField = document.querySelector(".goog-te-combo");
+            if (selectField) {
+              selectField.value = language;
+              selectField.dispatchEvent(new Event("change"));
+            }
+          }
+        }
+      </script>
+
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-3">
@@ -127,16 +270,20 @@
                       <a href="{% url 'products' %}">All Products</a>
                     </li>
                     {% for category in categories %}
-                      <li>
-                        <a href="{% url 'category_products' category.id %}">{{ category.name }}</a>
-                      </li>
+                    <li>
+                      <a href="{% url 'category_products' category.id %}"
+                        >{{ category.name }}</a
+                      >
+                    </li>
                     {% endfor %}
                   </ul>
                 </li>
 
-                {% comment %} <li>
+                {% comment %}
+                <li>
                   <a href="./shop.html">Story</a>
-                </li> {% endcomment %}
+                </li>
+                {% endcomment %}
                 <li>
                   <a href="{% url 'about' %}">About</a>
                 </li>
@@ -148,11 +295,15 @@
           </div>
           <div class="col-lg-3 col-md-3">
             <div class="header__nav__option">
-              <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt="Search" /></a>
+              <a href="#" class="search-switch"
+                ><img src="{% static 'img/icon/search.png' %}" alt="Search"
+              /></a>
 
               <a href="{% url 'cart' %}">
                 <img src="{% static 'img/icon/cart.png' %}" alt="Cart" />
-                <span class="cart-count">({{ request.session.cart|length }})</span>
+                <span class="cart-count"
+                  >{{ request.session.cart|length }}</span
+                >
               </a>
               <!-- <div class="price">$0.00</div> -->
             </div>
@@ -165,11 +316,12 @@
     </header>
     <!-- Header Section End -->
 
-    {% block content %}
+    {% block content %} {% endblock %}
 
-    {% endblock %}
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
 
     <!-- Footer Section Begin -->
     <footer class="footer">
@@ -178,9 +330,14 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__logo">
-                <a href="#"><img src="{% static 'img/logo2.png' %}" alt="" /></a>
+                <a href="#"
+                  ><img src="{% static 'img/logo2.png' %}" alt=""
+                /></a>
               </div>
-              <p>The customer is at the heart of our unique business model, which includes design.</p>
+              <p>
+                The customer is at the heart of our unique business model, which
+                includes design.
+              </p>
               <!-- <a href="#"><img src="img/payment.png" alt="" /></a> -->
               <span class="hero__social">
                 <a href="#"><i class="fab fa-facebook text-light"></i></a>
@@ -226,11 +383,15 @@
             <div class="footer__widget">
               <h6>NewLetter</h6>
               <div class="footer__newslatter">
-                <p>Be the first to know about new arrivals, look books, sales & promos!</p>
+                <p>
+                  Be the first to know about new arrivals, look books, sales &
+                  promos!
+                </p>
                 <form action="{% url 'subscribe_newsletter' %}" method="post">
-                  {% csrf_token %}
-                  {{ newsletter_form.email }}
-                  <button type="submit"><span class="icon_mail_alt"></span></button>
+                  {% csrf_token %} {{ newsletter_form.email }}
+                  <button type="submit">
+                    <span class="icon_mail_alt"></span>
+                  </button>
                 </form>
               </div>
             </div>
@@ -241,9 +402,11 @@
             <div class="footer__copyright__text">
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               <p>
-                Copyright ©<script>
-                             document.write(new Date().getFullYear())
-                           </script>All rights reserved | Life Quality
+                Copyright ©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                All rights reserved | Life Quality
               </p>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </div>
@@ -257,8 +420,17 @@
     <div class="search-model">
       <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="search-close-switch">+</div>
-        <form class="search-model-form" method="get" action="{% url 'search' %}">
-          <input type="text" id="search-input" name="q" placeholder="Search here....." />
+        <form
+          class="search-model-form"
+          method="get"
+          action="{% url 'search' %}"
+        >
+          <input
+            type="text"
+            id="search-input"
+            name="q"
+            placeholder="Search here....."
+          />
         </form>
       </div>
     </div>
@@ -267,7 +439,7 @@
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <!-- <script src="{% static 'js/jquery.nice-select.min.js' %}"></script> -->
     <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
@@ -277,52 +449,52 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
-      var swiper = new Swiper('.mySwiper', {
+      var swiper = new Swiper(".mySwiper", {
         slidesPerView: 1,
         spaceBetween: 30,
         loop: true,
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
         breakpoints: {
           768: {
-            slidesPerView: 2
+            slidesPerView: 2,
           },
           992: {
-            slidesPerView: 3
-          }
-        }
-      })
+            slidesPerView: 3,
+          },
+        },
+      });
     </script>
     <script>
-      var swiper = new Swiper('.new-arrivals-slider', {
+      var swiper = new Swiper(".new-arrivals-slider", {
         loop: false,
         spaceBetween: 20,
         speed: 800, // <- ADD THIS: smooth slide speed in milliseconds (800ms)
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
         autoplay: {
           delay: 5000,
-          disableOnInteraction: false
+          disableOnInteraction: false,
         },
         breakpoints: {
           0: {
-            slidesPerView: 1
+            slidesPerView: 1,
           },
           576: {
-            slidesPerView: 2
+            slidesPerView: 2,
           },
           768: {
-            slidesPerView: 3
+            slidesPerView: 3,
           },
           992: {
-            slidesPerView: 4
-          }
-        }
-      })
+            slidesPerView: 4,
+          },
+        },
+      });
     </script>
   </body>
 </html>
