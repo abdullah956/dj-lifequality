@@ -88,3 +88,21 @@ def submit_review(request, product_id):
         )
         return redirect('home')  
     return redirect('home')
+
+def search_view(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(name__icontains=query).annotate(avg_rating=Avg('reviews__rating'))
+
+    for product in products:
+        avg_rating = int(product.avg_rating) if product.avg_rating else 0
+        product.filled_stars = [True] * avg_rating
+        product.unfilled_stars = [False] * (5 - avg_rating)
+        product.avg_rating = product.avg_rating or 0
+
+    categories = Category.objects.all()
+
+    return render(request, 'products/products.html', {
+        'products': products,
+        'categories': categories,
+        'query': query
+    })
