@@ -4,9 +4,7 @@ from django.contrib import messages
 from decimal import Decimal
 from django.http import HttpResponse
 from products.models import Product
-
-
-from decimal import Decimal
+from django.core.mail import send_mail
 
 def checkout_view(request):
     if request.method == 'POST':
@@ -53,7 +51,22 @@ def checkout_view(request):
             cart_data=cart,
             status='pending'
         )
-
+        send_mail(
+        subject='Order Confirmation - Thank You for Your Purchase!',
+        message=(
+            f'Dear {first_name} {last_name},\n\n'
+            f'Thank you for your order #{order.id}.\n'
+            f'We are currently processing it and will notify you once it ships.\n\n'
+            f'Order Summary:\n'
+            f'Total Amount: ${cart_total:.2f}\n\n'
+            f'Shipping Address:\n{address}, {city}, {state}, {postcode}, {country}\n\n'
+            f'If you have any questions, feel free to reply to this email.\n\n'
+            f'Best regards,\n'
+        ),
+        from_email='your_email@gmail.com',
+        recipient_list=[email],
+        fail_silently=False,
+        )
         request.session['cart'] = {}
         messages.success(request, 'Your order has been placed successfully!')
         return redirect('thanks')

@@ -4,7 +4,7 @@ from datetime import datetime
 import openpyxl
 from django.http import HttpResponse
 from products.models import Product
-
+from django.core.mail import send_mail
 
 def orders_view(request):
     filter_date = request.GET.get('filter_date')
@@ -28,7 +28,22 @@ def update_order_status(request, order_id):
         if new_status in dict(Order.ORDER_STATUS):
             order.status = new_status
             order.save()
+            send_mail(
+            subject='Update on Your Order Status',
+            message=(
+                f'Dear {order.first_name},\n\n'
+                f'Thank you for shopping with us. We would like to inform you that the status of your order #{order.id} '
+                f'has been updated to **{new_status.capitalize()}**.\n\n'
+                f'If you have any questions, feel free to contact our support team.\n\n'
+                f'Best regards,\nYour Company Name'
+            ),
+            from_email='your_email@gmail.com',
+            recipient_list=[order.email],
+            fail_silently=False,
+            )
+
     return redirect('orders')
+
 
 def order_detail_view(request, id):
     order = get_object_or_404(Order, id=id)
@@ -48,6 +63,7 @@ def order_detail_view(request, id):
             except Product.DoesNotExist:
                 continue
     return render(request, 'orders/order_detail.html', {'order': order, 'cart_items': cart_items})
+
 
 def download_orders_excel(request):
     filter_date = request.GET.get('filter_date')
