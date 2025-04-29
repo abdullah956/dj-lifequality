@@ -139,7 +139,11 @@
                           <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
                         </div> {% endcomment %}
 
-                        <h5>${{ product.price }}</h5>
+                        {% if product.sale_price %}
+                          <h5><del>${{ product.price }}</del>${{ product.sale_price }}</h5>
+                        {% else %}
+                          <h5>${{ product.price }}</h5>
+                        {% endif %}
                       </div>
                     </div>
                   </div>
@@ -187,7 +191,11 @@
                           <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
                         </div> {% endcomment %}
 
-                        <h5>${{ product.price }}</h5>
+                        {% if product.sale_price %}
+                          <h5><del>${{ product.price }}</del>${{ product.sale_price }}</h5>
+                        {% else %}
+                          <h5>${{ product.price }}</h5>
+                        {% endif %}
                       </div>
                     </div>
                   </div>
@@ -235,7 +243,11 @@
                           <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
                         </div> {% endcomment %}
 
-                        <h5>${{ product.price }}</h5>
+                        {% if product.sale_price %}
+                          <h5><del>${{ product.price }}</del>${{ product.sale_price }}</h5>
+                        {% else %}
+                          <h5>${{ product.price }}</h5>
+                        {% endif %}
                       </div>
                     </div>
                   </div>

@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from products.models import Product
 
 
+from decimal import Decimal
+
 def checkout_view(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -25,7 +27,8 @@ def checkout_view(request):
         for product_id, quantity in cart.items():
             try:
                 product = Product.objects.get(id=product_id)
-                item_total = Decimal(product.price) * Decimal(quantity)
+                price = product.sale_price if product.sale_price else product.price
+                item_total = Decimal(price) * Decimal(quantity)
                 cart_items.append({
                     'product': product,
                     'quantity': quantity,
@@ -34,6 +37,7 @@ def checkout_view(request):
                 cart_total += item_total
             except Product.DoesNotExist:
                 continue
+
         order = Order.objects.create(
             first_name=first_name,
             last_name=last_name,
@@ -51,9 +55,9 @@ def checkout_view(request):
         )
 
         request.session['cart'] = {}
-
         messages.success(request, 'Your order has been placed successfully!')
         return redirect('thanks')
+
     cart = request.session.get('cart', {})
     cart_items = []
     cart_total = Decimal('0.00')
@@ -61,7 +65,8 @@ def checkout_view(request):
     for product_id, quantity in cart.items():
         try:
             product = Product.objects.get(id=product_id)
-            item_total = Decimal(product.price) * Decimal(quantity)
+            price = product.sale_price if product.sale_price else product.price
+            item_total = Decimal(price) * Decimal(quantity)
             cart_items.append({
                 'product': product,
                 'quantity': quantity,
@@ -75,6 +80,7 @@ def checkout_view(request):
         'cart_items': cart_items,
         'cart_total': cart_total,
     })
+
 
 
 def thanks_view(request):

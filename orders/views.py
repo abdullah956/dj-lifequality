@@ -8,11 +8,11 @@ from products.models import Product
 
 def orders_view(request):
     filter_date = request.GET.get('filter_date')
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-created_at')
     if filter_date:
         try:
             date_obj = datetime.strptime(filter_date, '%Y-%m-%d').date()
-            orders = orders.filter(created_at__date=date_obj)
+            orders = orders.filter(created_at__date=date_obj).order_by('-created_at')
         except ValueError:
             pass
     return render(request, 'orders/orders_list.html', {
@@ -30,7 +30,6 @@ def update_order_status(request, order_id):
             order.save()
     return redirect('orders')
 
-
 def order_detail_view(request, id):
     order = get_object_or_404(Order, id=id)
     cart_items = []
@@ -38,11 +37,12 @@ def order_detail_view(request, id):
         for product_id, qty in order.cart_data.items():
             try:
                 product = Product.objects.get(id=product_id)
+                price = product.sale_price if product.sale_price else product.price
                 cart_items.append({
                     'name': product.name,
-                    'price': product.price,
+                    'price': price,
                     'quantity': qty,
-                    'subtotal': product.price * qty,
+                    'subtotal': price * qty,
                     'image': product.image.url if product.image else ''
                 })
             except Product.DoesNotExist:

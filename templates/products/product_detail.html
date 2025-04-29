@@ -43,7 +43,11 @@
                 <small class="ms-2 text-muted">({{ product.avg_rating }}/5)</small>
               </div>
 
-              <h3>${{ product.price }} <span>${{ product.old_price }}</span></h3>
+              {% if product.sale_price %}
+                <h5><del>${{ product.price }}</del>${{ product.sale_price }}</h5>
+              {% else %}
+                <h5>${{ product.price }}</h5>
+              {% endif %}
 
               <!-- Description Section -->
               <div class="product__details__description">

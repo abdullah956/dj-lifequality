@@ -10,13 +10,15 @@ def cart_view(request):
     for product_id, quantity in cart.items():
         try:
             product = Product.objects.get(id=product_id)
-            total_price = product.price * quantity
+            price = product.sale_price if product.sale_price else product.price
+            total_price = price * quantity
             cart_total += total_price
 
             cart_items.append({
                 'product': product,
                 'quantity': quantity,
                 'total_price': total_price,
+                'used_price': price,
             })
         except Product.DoesNotExist:
             pass
@@ -26,6 +28,7 @@ def cart_view(request):
         'cart_total': cart_total,
     }
     return render(request, 'carts/cart.html', context)
+
 
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
@@ -37,32 +40,39 @@ def add_to_cart(request, product_id):
 
     request.session['cart'] = cart
     return redirect('cart')
-
 def update_cart(request):
     if request.method == 'POST':
         product_id = str(request.POST.get('product_id'))
         quantity = int(request.POST.get('quantity'))
 
-        # Update the cart
         cart = request.session.get('cart', {})
-
         if product_id in cart:
             cart[product_id] = quantity
             request.session['cart'] = cart
 
         try:
             product = Product.objects.get(id=product_id)
-            item_total = product.price * quantity
+            unit_price = product.sale_price if product.sale_price else product.price
+            item_total = unit_price * quantity
         except Product.DoesNotExist:
             return JsonResponse({'error': 'Product not found'}, status=404)
 
-        # Recalculate cart total
-        cart_total = sum(Product.objects.get(id=pid).price * qty for pid, qty in cart.items())
+        cart_total = 0
+        for pid, qty in cart.items():
+            p = Product.objects.get(id=pid)
+            price = p.sale_price if p.sale_price else p.price
+            cart_total += price * qty
 
-        return JsonResponse({
+        response_data = {
             'item_total': f"{item_total:.2f}",
             'cart_total': f"{cart_total:.2f}",
-        })
+        }
+
+        if product.sale_price:
+            response_data['item_original_price'] = f"{product.price:.2f}"
+            response_data['item_sale_price'] = f"{product.sale_price:.2f}"
+
+        return JsonResponse(response_data)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
