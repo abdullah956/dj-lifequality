@@ -20,6 +20,7 @@ class Order(BasedModel):
     order_notes = models.TextField(blank=True, null=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='pending')
+    paid = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Order {self.id} by {self.first_name} {self.last_name}'
