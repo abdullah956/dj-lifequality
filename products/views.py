@@ -18,8 +18,10 @@ def products_view(request):
         product.unfilled_stars = unfilled_stars
         product.avg_rating = product.avg_rating or 0
     categories = Category.objects.all()
-    return render(request, 'products/products.html', {'products': products, 'categories': categories})
-
+    return render(request, 'products/products.html', {
+        'products': products,
+        'categories': categories,
+    })
 
 def product_detail_view(request, id):
     product = Product.objects.get(id=id)
@@ -34,21 +36,28 @@ def product_detail_view(request, id):
     return render(request, 'products/product_detail.html', {'product': product, 'related_products': related_products})
 
 def category_products_view(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
+    sort = request.GET.get('sort')
+    category = Category.objects.get(id=category_id)
     products = Product.objects.filter(category=category)
-    categories = Category.objects.all()
+
+    if sort == 'low':
+        products = products.order_by('price')
+    elif sort == 'high':
+        products = products.order_by('-price')
 
     for product in products:
         avg_rating = product.reviews.aggregate(Avg('rating'))['rating__avg']
-        avg_rating = int(avg_rating) if avg_rating else 0 
-        filled_stars = [True] * avg_rating
-        unfilled_stars = [False] * (5 - avg_rating)
-        product.filled_stars = filled_stars
-        product.unfilled_stars = unfilled_stars
+        avg_rating = int(avg_rating) if avg_rating else 0
+        product.filled_stars = [True] * avg_rating
+        product.unfilled_stars = [False] * (5 - avg_rating)
         product.avg_rating = avg_rating
 
-    return render(request, 'products/products.html', {'products': products, 'categories': categories, 'selected_category': category})
-
+    categories = Category.objects.all()
+    return render(request, 'products/products.html', {
+        'products': products,
+        'categories': categories,
+        'category': category
+    })
 
 def products_by_category(request, category_id):
     sort = request.GET.get('sort')
