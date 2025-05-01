@@ -78,7 +78,7 @@
                     </div>
 
                     {% if product.sale_price %}
-                      <h5><del>${{ product.price }}</del>${{ product.sale_price }}</h5>
+                      <h5><span style="color: gray;font-size: small;text-decoration: line-through;">${{ product.price }}</span> ${{ product.sale_price }}</h5>
                     {% else %}
                       <h5>${{ product.price }}</h5>
                     {% endif %}
