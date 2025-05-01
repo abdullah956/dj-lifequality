@@ -114,9 +114,11 @@
           <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
               <ul>
-                <li class="">
-                  <a href="{% url 'orders' %}">Orders</a>
-                </li>
+                {% if user.is_authenticated %}
+                  <li class="">
+                    <a href="{% url 'orders' %}">Orders</a>
+                  </li>
+                {% endif %}
                 <li class="">
                   <a href="{% url 'home' %}">Home</a>
                 </li>
