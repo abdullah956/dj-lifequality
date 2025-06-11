@@ -5,6 +5,7 @@ import openpyxl
 from django.http import HttpResponse
 from products.models import Product
 from django.core.mail import send_mail
+from config import settings
 
 def orders_view(request):
     filter_date = request.GET.get('filter_date')
@@ -37,7 +38,7 @@ def update_order_status(request, order_id):
                 f'If you have any questions, feel free to contact our support team.\n\n'
                 f'Best regards,\nYour Company Name'
             ),
-            from_email='your_email@gmail.com',
+            from_email=settings.EMAIL_HOST_USER,
             recipient_list=[order.email],
             fail_silently=False,
             )

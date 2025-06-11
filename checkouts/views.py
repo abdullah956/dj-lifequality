@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.http import HttpResponse
 from products.models import Product
 from django.core.mail import send_mail
+from config import settings
 
 def checkout_view(request):
     if request.method == 'POST':
@@ -63,7 +64,7 @@ def checkout_view(request):
             f'If you have any questions, feel free to reply to this email.\n\n'
             f'Best regards,\n'
         ),
-        from_email='your_email@gmail.com',
+        from_email=settings.EMAIL_HOST_USER,
         recipient_list=[email],
         fail_silently=False,
         )
